@@ -1,4 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { InfoIcon, VaderIcon } from "./Icons";
 
 interface VaderValuesCardProps {
@@ -65,7 +71,16 @@ const VaderValuesCard: React.FC<VaderValuesCardProps> = ({ data }) => {
             </span>
           </CardTitle>
           <div className='flex items-center gap-2 text-gray-500 text-sm'>
-            <InfoIcon className='h-6 w-6' />
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <InfoIcon className='h-6 w-6' />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>More info about Vader sentiment analysis values</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         </div>
       </CardHeader>

@@ -2,8 +2,8 @@ import React from "react";
 
 const HomeLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className='min-h-screen h-full bg-[#ebf5fc]'>
-      <main>{children}</main>
+    <div className='h-screen overflow-hidden bg-[#ebf5fc]'>
+      <main className='h-full'>{children}</main>
 
       {/* background effect */}
 

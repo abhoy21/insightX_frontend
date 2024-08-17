@@ -79,7 +79,16 @@ const ReviewSentimentCard: React.FC<ReviewSentimentCardProps> = ({
             </p>
           </CardTitle>
           <div className='flex items-center gap-2 text-muted-foreground text-sm'>
-            <InfoIcon className='h-6 w-6' />
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <InfoIcon className='h-6 w-6' />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Additional Information about the sentiment analysis</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         </div>
       </CardHeader>

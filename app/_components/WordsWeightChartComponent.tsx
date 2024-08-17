@@ -11,6 +11,12 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import React from "react";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import { GraphIcon, InfoIcon } from "./Icons";
@@ -21,13 +27,31 @@ interface Props {
   wordweightageresponse: { top_words: [string, number][] };
 }
 
+const CustomXAxisTick: React.FC<{
+  x: number;
+  y: number;
+  stroke?: string;
+  value: string;
+}> = ({ x, y, stroke, value }) => (
+  <text
+    x={x}
+    y={y + 10}
+    dy={0}
+    textAnchor='middle'
+    fill={stroke || "#666"}
+    transform={`rotate(-45, ${x}, ${y})`}
+  >
+    {value}
+  </text>
+);
+
 const WordsWeightageChartComponent: React.FC<Props> = ({
   className,
   wordweightageresponse,
 }) => {
   return (
     <Card
-      className={`mt-10 bg-[#ebf5fc] border-none custom-neumorphism rounded-3xl min-w-[1040px] max-h-[500px] sm:max-w-md md:max-w-lg lg:max-w-xl ${className}`}
+      className={`mt-10 bg-[#ebf5fc] border-none custom-neumorphism rounded-3xl min-w-[1040px] max-h-[500px] ${className}`}
     >
       <CardHeader>
         <div className='flex items-center justify-between'>
@@ -43,7 +67,19 @@ const WordsWeightageChartComponent: React.FC<Props> = ({
             </span>
           </CardTitle>
           <div className='flex items-center gap-2 text-muted-foreground text-sm'>
-            <InfoIcon className='h-6 w-6' />
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <InfoIcon className='h-6 w-6' />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>
+                    Displays the weightage of words based on their impact in
+                    sentiment analysis.
+                  </p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         </div>
       </CardHeader>
@@ -82,7 +118,12 @@ const BarChartComponent: React.FC<Props> = ({
         }}
         className='max-h-[350px] min-w-[1000px]'
       >
-        <BarChart width={1000} height={300} data={data}>
+        <BarChart
+          width={1000}
+          height={300}
+          data={data}
+          margin={{ top: 20, right: 10, bottom: 20, left: 20 }}
+        >
           <CartesianGrid strokeDasharray='3 3' />
           {isEmpty ? (
             <text
@@ -100,7 +141,7 @@ const BarChartComponent: React.FC<Props> = ({
               <XAxis
                 dataKey='word' // Updated dataKey to match the data
                 tickLine={false}
-                tick={{ angle: -45, textAnchor: "end" }}
+                tick={{ angle: -35, textAnchor: "end" }}
                 axisLine={false}
               />
               <YAxis tickLine={false} tickMargin={10} axisLine={false} />
