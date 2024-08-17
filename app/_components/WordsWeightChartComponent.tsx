@@ -32,13 +32,13 @@ const WordsWeightageChartComponent: React.FC<Props> = ({
       <CardHeader>
         <div className='flex items-center justify-between'>
           <CardTitle className='flex items-center justify-center gap-2'>
-            <div className='bg-gray-200/45 rounded-full p-3'>
+            <div className='bg-gray-200/45 rounded-full px-3'>
               <GraphIcon className='w-6 h-6 text-muted-foreground' />
             </div>
             <span className='text-2xl font-semibold'>
-              Review Sentiment by Category
+              Words Weightage
               <CardDescription className='font-medium'>
-                Sentiment analysis broken down by review categories.
+                Impact of certain words in Sentiment Analysis
               </CardDescription>
             </span>
           </CardTitle>
@@ -100,7 +100,7 @@ const BarChartComponent: React.FC<Props> = ({
               <XAxis
                 dataKey='word' // Updated dataKey to match the data
                 tickLine={false}
-                tick={{ angle: -40, textAnchor: "end" }}
+                tick={{ angle: -45, textAnchor: "end" }}
                 axisLine={false}
               />
               <YAxis tickLine={false} tickMargin={10} axisLine={false} />

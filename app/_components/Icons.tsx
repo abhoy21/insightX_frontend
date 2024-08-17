@@ -265,16 +265,14 @@ export function Percentageicon(props: IconProps) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
+      xmlSpace='preserve'
       width={800}
       height={800}
-      fill='none'
       viewBox='0 0 24 24'
       {...props}
     >
-      <path
-        fill='#0D0D0D'
-        d='M18.707 5.293a1 1 0 0 1 0 1.414l-12 12a1 1 0 0 1-1.414-1.414l12-12a1 1 0 0 1 1.414 0zM17 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM7 9a2 2 0 1 0 0-4 2 2 0 0 0 0 4z'
-      />
+      <path d='M23 24H1v-2h2.4c-1.6-5 1.6-7 3.7-8.4.9-.6 1.8-1.1 1.8-1.6s-.9-1.1-1.8-1.6C5 9 1.8 7.1 3.4 2H1V0h22v2h-2.4c1.6 5-1.6 7-3.7 8.4-1 .5-1.9 1.1-1.9 1.6s.9 1.1 1.8 1.6c2.1 1.4 5.3 3.4 3.7 8.4H23v2zM5.6 22h12.8c1.6-4-.5-5.3-2.6-6.7-1.4-.8-2.8-1.7-2.8-3.3 0-1.6 1.4-2.5 2.8-3.3C17.9 7.3 20 6 18.4 2H5.6C4 6 6.1 7.3 8.2 8.7c1.4.8 2.8 1.7 2.8 3.3 0 1.6-1.4 2.5-2.8 3.3C6.1 16.7 4 18 5.6 22z' />
+      <path d='M16.8 23H7c-.3-1.5.2-2.4 2.3-4.3.8-.7 1.8-1.5 2.7-2.8 1 1.2 2 2.1 2.7 2.8 2.1 2 2.6 2.3 2.1 4.3zM9.4 6c-.7 1.3-.7 1.3.9 2.1.5.2 1.1.5 1.6.9.5-.4 1.2-.7 1.6-.9 1.7-.8 1.7-.8 1-2.1' />
     </svg>
   );
 }
@@ -399,6 +397,7 @@ export function InfoIcon(props: IconProps) {
       xmlns='http://www.w3.org/2000/svg'
       xmlSpace='preserve'
       viewBox='0 0 32 32'
+      fill='#9ca3af'
       {...props}
     >
       <path d='M15 14h2v8h-2zM15 10h2v2h-2z' />
@@ -407,7 +406,7 @@ export function InfoIcon(props: IconProps) {
         cy={16}
         r={12}
         fill='none'
-        stroke='#000'
+        stroke='#9ca3af'
         strokeMiterlimit={10}
         strokeWidth={2}
       />

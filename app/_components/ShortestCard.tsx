@@ -15,7 +15,7 @@ const ShortestCard: React.FC<ShortestCardProps> = ({ shortest }) => {
           aria-hidden='true'
         >
           <circle
-            className='text-gray-300'
+            className='text-[#e5e7eb]'
             strokeWidth='10'
             stroke='currentColor'
             fill='transparent'
@@ -36,12 +36,13 @@ const ShortestCard: React.FC<ShortestCardProps> = ({ shortest }) => {
             cy={radius}
           />
         </svg>
-        <span className='absolute text-2xl text-fuchsia-500'>{`${shortest}%`}</span>
+        <span className='absolute text-2xl text-fuchsia-500'>{`${shortest}`}</span>
       </div>
-      <p className='ml-10 font-medium text-gray-600 sm:text-xl'>Shortest</p>
-      <span className='text-xl font-medium text-fuchsia-500 hidden sm:block ml-4'>
-        +{shortest}
-      </span>
+      <div>
+        <p className='ml-10 font-medium text-gray-600 sm:text-xl'>Shortest</p>
+        <span className='ml-10 text-sm text-gray-400'>length by words</span>
+      </div>
+      <div className='h-10 w-6 bg-gradient-to-tl from-fuchsia-500  to-fuchsia-500/30 rounded-md backdrop-blur-md backdrop-saturate-150 custom-neumorphism ml-2'></div>
     </div>
   );
 };

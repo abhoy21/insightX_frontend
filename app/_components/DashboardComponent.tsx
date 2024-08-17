@@ -10,6 +10,7 @@ import {
 } from "./AverageReviewLengthComponent";
 import FeatureCountCard from "./FeatureCountComponent";
 import { HotelReviewIcon, TextIcon, UploadIcon } from "./Icons";
+import Loader from "./Loader"; // Assuming you have the Loader component from the previous code
 import VaderValuesCard from "./VaderComponet";
 import WordsWeightageChartComponent from "./WordsWeightChartComponent";
 
@@ -51,6 +52,9 @@ const DashboardComponent = () => {
     | {}
   >({});
 
+  const [loading, setLoading] = useState(false); // Loading state
+  const [error, setError] = useState<string | null>(null); // Error state
+
   const defaultReviewLengthData = {
     avg_len: 0,
     max_len: 0,
@@ -70,6 +74,9 @@ const DashboardComponent = () => {
     if (file) {
       const formData = new FormData();
       formData.append("file", file);
+
+      setLoading(true);
+      setError(null);
 
       try {
         // Length Request
@@ -123,10 +130,13 @@ const DashboardComponent = () => {
           throw new Error("Network response was not ok");
         }
         const featureCountData = await featureCountResponse.json();
-        console.log(featureCountData);
         setFeatureCntResponse(featureCountData);
+
+        setLoading(false); // Turn off loader after all responses are received
       } catch (error) {
         console.error("There was a problem with the fetch operation:", error);
+        setError("Failed to fetch data. Please try again."); // Set error message
+        setLoading(false); // Turn off loader on error
       }
     }
   };
@@ -170,32 +180,42 @@ const DashboardComponent = () => {
           </div>
         </div>
       </header>
+
       <main className='flex flex-1 flex-col justify-center items-center gap-4 p-4 md:gap-8 md:p-6'>
-        <div className=''>
-          <div className='grid grid-cols-3 gap-4'>
-            <div className='col-span-2'>
-              <ReviewSentimentCard
-                featurecntresponse={featurecntresponse || {}}
-              />
+        {loading ? ( // Show loader if loading
+          <Loader />
+        ) : error ? ( // Show error message if there's an error
+          <div className='text-red-500'>{error}</div>
+        ) : (
+          // Render content when not loading and no error
+          <div className=''>
+            <div className='grid grid-cols-3 gap-4'>
+              <div className='col-span-2'>
+                <ReviewSentimentCard
+                  featurecntresponse={featurecntresponse || {}}
+                />
+              </div>
+              <VaderValuesCard data={responseVader || defaultVaderData} />
             </div>
-            <VaderValuesCard data={responseVader || defaultVaderData} />
-          </div>
 
-          <div className='grid grid-cols-3 gap-4 mt-4'>
-            <div className='col-span-2'>
-              <ReviewLengthCard
-                data={responseData || defaultReviewLengthData}
-              />
+            <div className='grid grid-cols-3 gap-4 mt-4'>
+              <div className='col-span-2'>
+                <ReviewLengthCard
+                  data={responseData || defaultReviewLengthData}
+                />
 
-              <WordsWeightageChartComponent
-                wordweightageresponse={wordweightageresponse}
-              />
-            </div>
-            <div className='col-span-1'>
-              <FeatureCountCard featurecntresponse={featurecntresponse || {}} />
+                <WordsWeightageChartComponent
+                  wordweightageresponse={wordweightageresponse}
+                />
+              </div>
+              <div className='col-span-1'>
+                <FeatureCountCard
+                  featurecntresponse={featurecntresponse || {}}
+                />
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </main>
     </div>
   );

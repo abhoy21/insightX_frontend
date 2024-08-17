@@ -12,10 +12,6 @@ import { InfoIcon, Percentageicon } from "./Icons";
 import LongestCard from "./LongestCard";
 import ShortestCard from "./ShortestCard";
 
-// interface ReviewSentimentCardProps {
-//   pred_cnt: Record<string, number>;
-// }
-
 interface ReviewSentimentCardProps {
   featurecntresponse: {
     pred_cnt?: {
@@ -55,15 +51,32 @@ const ReviewSentimentCard: React.FC<ReviewSentimentCardProps> = ({
   const positivePercentage = total ? (positiveCount / total) * 100 : 0;
   const negativePercentage = total ? (negativeCount / total) * 100 : 0;
 
+  let resultText = "Neutral";
+  let resultColor = "text-gray-500";
+  let resultMessage = "Results are neutral";
+
+  if (positivePercentage > negativePercentage) {
+    resultText = "Positive";
+    resultColor = "text-green-500";
+    resultMessage = "Results look good for the business";
+  } else if (negativePercentage > positivePercentage) {
+    resultText = "Negative";
+    resultColor = "text-red-500";
+    resultMessage = "Results may need attention";
+  }
+
   return (
     <Card className='min-w-[1000px] bg-[#ebf5fc] custom-neumorphism rounded-3xl border-none p-3'>
       <CardHeader>
         <div className='flex items-center justify-between'>
           <CardTitle className='flex items-center justify-center gap-2'>
-            <div className='bg-gray-200/45 rounded-full p-3'>
+            <div className='bg-gray-200/35 rounded-full p-3'>
               <Percentageicon className='w-6 h-6 text-muted-foreground' />
             </div>
-            Review Sentiment
+            <span className={`text-4xl ${resultColor}`}>{resultText}</span>
+            <p className='text-sm text-gray-400 mt-4 ml-4 font-mono'>
+              {resultMessage}
+            </p>
           </CardTitle>
           <div className='flex items-center gap-2 text-muted-foreground text-sm'>
             <InfoIcon className='h-6 w-6' />
@@ -101,7 +114,7 @@ const ReviewSentimentCard: React.FC<ReviewSentimentCardProps> = ({
             </div>
           </div>
           <div className='text-sm text-muted-foreground'>
-            Positive vs. Negative
+            Positive vs. Negative (The overall result)
           </div>
         </div>
       </CardContent>

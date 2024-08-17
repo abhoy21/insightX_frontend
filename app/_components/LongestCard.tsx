@@ -16,7 +16,7 @@ const LongestCard: React.FC<LongestCardProps> = ({ longest }) => {
           aria-hidden='true'
         >
           <circle
-            className='text-gray-300'
+            className='text-[#e5e7eb]'
             strokeWidth='10'
             stroke='currentColor'
             fill='transparent'
@@ -37,12 +37,13 @@ const LongestCard: React.FC<LongestCardProps> = ({ longest }) => {
             cy={radius}
           />
         </svg>
-        <span className='absolute text-2xl text-green-500'>{`${longest}%`}</span>
+        <span className='absolute text-2xl text-green-500'>{`${longest}`}</span>
       </div>
-      <p className='ml-10 font-medium text-gray-600 sm:text-xl'>Longest</p>
-      <span className='text-xl font-medium text-green-500 hidden sm:block ml-4'>
-        +{longest}
-      </span>
+      <div>
+        <p className='ml-10 font-medium text-gray-600 sm:text-xl'>Longest</p>
+        <span className='ml-10 text-sm text-gray-400'>length by words</span>
+      </div>
+      <div className='h-10 w-6 bg-gradient-to-tl from-green-500  to-green-500/30 rounded-md backdrop-blur-md backdrop-saturate-150 custom-neumorphism ml-2'></div>
     </div>
   );
 };
