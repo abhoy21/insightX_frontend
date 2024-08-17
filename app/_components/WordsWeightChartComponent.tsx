@@ -30,18 +30,17 @@ interface Props {
 const CustomXAxisTick: React.FC<{
   x: number;
   y: number;
-  stroke?: string;
-  value: string;
-}> = ({ x, y, stroke, value }) => (
+  payload: { value: string };
+}> = ({ x, y, payload }) => (
   <text
     x={x}
     y={y + 10}
-    dy={0}
-    textAnchor='middle'
-    fill={stroke || "#666"}
-    transform={`rotate(-45, ${x}, ${y})`}
+    textAnchor='end'
+    fill='#666'
+    transform={`rotate(-35, ${x}, ${y + 10})`}
+    style={{ fontSize: "12px" }}
   >
-    {value}
+    {payload.value}
   </text>
 );
 
@@ -141,7 +140,7 @@ const BarChartComponent: React.FC<Props> = ({
               <XAxis
                 dataKey='word' // Updated dataKey to match the data
                 tickLine={false}
-                tick={{ angle: -35, textAnchor: "end" }}
+                tick={(props) => <CustomXAxisTick {...props} />}
                 axisLine={false}
               />
               <YAxis tickLine={false} tickMargin={10} axisLine={false} />
