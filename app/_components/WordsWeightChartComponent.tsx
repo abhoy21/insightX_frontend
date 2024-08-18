@@ -27,23 +27,6 @@ interface Props {
   wordweightageresponse: { top_words: [string, number][] };
 }
 
-const CustomXAxisTick: React.FC<{
-  x: number;
-  y: number;
-  payload: { value: string };
-}> = ({ x, y, payload }) => (
-  <text
-    x={x}
-    y={y + 10}
-    textAnchor='end'
-    fill='#666'
-    transform={`rotate(-35, ${x}, ${y + 10})`}
-    style={{ fontSize: "12px" }}
-  >
-    {payload.value}
-  </text>
-);
-
 const WordsWeightageChartComponent: React.FC<Props> = ({
   className,
   wordweightageresponse,
@@ -99,11 +82,14 @@ const BarChartComponent: React.FC<Props> = ({
   style,
   wordweightageresponse,
 }) => {
+  const maxLength = 7; // Example max length, adjust as needed
+
   const data =
     wordweightageresponse?.top_words
-      ?.map(([word, weight]) => ({ word, weight }))
+      ?.filter(([word]) => word.length <= maxLength) // Filter out words with length greater than maxLength
+      .map(([word, weight]) => ({ word, weight }))
       .sort((a, b) => a.word.localeCompare(b.word)) // Sort alphabetically by word
-      .slice(0, 20) || [];
+      .slice(0, 25) || []; // Slice the desired range
   const isEmpty = data.length === 0;
 
   return (
@@ -121,7 +107,7 @@ const BarChartComponent: React.FC<Props> = ({
           width={1000}
           height={300}
           data={data}
-          margin={{ top: 20, right: 10, bottom: 20, left: 20 }}
+          margin={{ top: 10, right: 10, bottom: 20, left: 10 }}
         >
           <CartesianGrid strokeDasharray='3 3' />
           {isEmpty ? (
@@ -140,7 +126,7 @@ const BarChartComponent: React.FC<Props> = ({
               <XAxis
                 dataKey='word' // Updated dataKey to match the data
                 tickLine={false}
-                tick={(props) => <CustomXAxisTick {...props} />}
+                tickMargin={10}
                 axisLine={false}
               />
               <YAxis tickLine={false} tickMargin={10} axisLine={false} />

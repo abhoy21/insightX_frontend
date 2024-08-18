@@ -1,5 +1,5 @@
 import { Separator } from "@/components/ui/separator";
-import { ActivityIcon, GaugeIcon, UploadIcon } from "./Icons";
+import { TrendingDownIcon, TrendingUpIcon, UploadIcon } from "./Icons";
 
 interface FeatureCountTableProps {
   featurecntresponse: {
@@ -40,13 +40,13 @@ export default function FeatureCountTable({
               <th className='p-4 text-left w-1/4'>Feature</th>
               <th className='p-4 text-left w-1/3'>
                 <div className='flex gap-1'>
-                  <ActivityIcon className='w-5 h-5 text-green-500' />
+                  <TrendingUpIcon className='w-5 h-5 text-green-500' />
                   <span className='text-green-500/75'>Positive Impact</span>
                 </div>
               </th>
               <th className='p-4 text-left w-1/3'>
                 <div className='flex gap-1'>
-                  <GaugeIcon className='w-5 h-5 text-red-500' />
+                  <TrendingDownIcon className='w-5 h-5 text-red-500' />
                   <span className='text-red-500/75'>Negative Impact</span>
                 </div>
               </th>

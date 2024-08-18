@@ -71,7 +71,7 @@ const ReviewSentimentCard: React.FC<ReviewSentimentCardProps> = ({
         <div className='flex items-center justify-between'>
           <CardTitle className='flex items-center justify-center gap-2'>
             <div className='bg-gray-200/35 rounded-full p-3'>
-              <Percentageicon className='w-6 h-6 text-muted-foreground' />
+              <Percentageicon className='w-7 h-7 text-muted-foreground' />
             </div>
             <span className={`text-4xl ${resultColor}`}>{resultText}</span>
             <p className='text-sm text-gray-400 mt-4 ml-4 font-mono'>
