@@ -5,20 +5,35 @@ interface IconProps extends React.SVGProps<SVGSVGElement> {}
 export function TextIcon(props: IconProps) {
   return (
     <svg
-      {...props}
       xmlns='http://www.w3.org/2000/svg'
-      width='24'
-      height='24'
+      width={800}
+      height={800}
+      className='icon flat-line'
+      data-name='Flat Line'
       viewBox='0 0 24 24'
-      fill='none'
-      stroke='currentColor'
-      strokeWidth='2'
-      strokeLinecap='round'
-      strokeLinejoin='round'
+      {...props}
     >
-      <rect x='4' y='6' width='16' height='12' rx='2' />
-      <path d='M6 10h12' />
-      <path d='M6 14h8' />
+      <path
+        d='M12 3v18m-2 0h4'
+        style={{
+          fill: "none",
+          stroke: "#38bdf8",
+          strokeLinecap: "round",
+          strokeLinejoin: "round",
+          strokeWidth: 2,
+        }}
+      />
+      <path
+        d='M5 5V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v1'
+        data-name='primary'
+        style={{
+          fill: "none",
+          stroke: "#38bdf8",
+          strokeLinecap: "round",
+          strokeLinejoin: "round",
+          strokeWidth: 2,
+        }}
+      />
     </svg>
   );
 }
@@ -47,21 +62,31 @@ export function UploadIcon(props: IconProps) {
 export function HotelReviewIcon(props: IconProps) {
   return (
     <svg
-      {...props}
       xmlns='http://www.w3.org/2000/svg'
-      width='24'
-      height='24'
-      viewBox='0 0 24 24'
+      width={20}
+      height={20}
       fill='none'
-      stroke='currentColor'
-      strokeWidth='2'
-      strokeLinecap='round'
-      strokeLinejoin='round'
+      {...props}
     >
-      <rect x='3' y='5' width='18' height='14' rx='2' />
-      <path d='M12 15H8V17H12V15Z' />
-      <path d='M16 15H12V17H16V15Z' />
-      <path d='M10 19H14V21H10V19Z' />
+      <path
+        stroke='#0496FF'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+        strokeMiterlimit={10}
+        d='M1 18.8h17.8M1.5 17.2v-1.3h3.1v1.3M6.1 17.2v-4.3h3v4.3M10.6 17.2V10h3v7.2M15.1 17.2V6.9h3v10.3M1 12.9c.9-.3 2.3-.7 3.8-1.7.4-.3 1.4-.9 4.3-4 2.4-2.6 2.9-3.3 4.4-4 1.2-.5 2.3-.7 3-.7'
+      />
+      <path
+        stroke='#0496FF'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+        strokeMiterlimit={10}
+        d='m16 1 1.5 1.5L16 4.1'
+      />
+      <path
+        fill='#0496FF'
+        d='M1.6 17.2v-1.3h3.1v1.3M6.2 17.2v-4.3h3v4.3M10.7 17.2V10h2.9v7.2M15.2 17.2V6.9h3v10.3'
+        opacity={0.3}
+      />
     </svg>
   );
 }

@@ -1,9 +1,9 @@
-import DashboardComponent from "../_components/DashboardComponent";
+import LandingPageComponent from "../_components/LandingPage";
 
 const HomePage = () => {
   return (
     <div>
-      <DashboardComponent />
+      <LandingPageComponent />
     </div>
   );
 };

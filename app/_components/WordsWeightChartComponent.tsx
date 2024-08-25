@@ -117,7 +117,7 @@ const BarChartComponent: React.FC<Props> = ({
               y='50%'
               dominantBaseline='middle'
               textAnchor='middle'
-              fill='#14b8a6'
+              fill='#0ea5e9'
             >
               No data
             </text>
@@ -136,7 +136,7 @@ const BarChartComponent: React.FC<Props> = ({
               />
               <Bar
                 dataKey='weight' // Updated dataKey to match the data
-                fill='#14b8a6'
+                fill='#0ea5e9'
                 fillOpacity={0.6}
                 radius={[8, 8, 6, 6]}
                 barSize={30}

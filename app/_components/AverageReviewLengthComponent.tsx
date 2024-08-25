@@ -100,7 +100,7 @@ const ReviewSentimentCard: React.FC<ReviewSentimentCardProps> = ({
               style={{ width: `${positivePercentage}%` }}
             />
             <div
-              className='absolute top-0 right-0 h-full bg-gradient-to-b from-red-400/50 to-red-500/80 shadow-red-500/75 rounded-r-full backdrop-blur-md'
+              className='absolute top-0 right-0 h-full bg-gradient-to-b from-red-400/50 to-red-500 shadow-red-500/75 rounded-r-full backdrop-blur-md'
               style={{ width: `${negativePercentage}%` }}
             />
             <div className='absolute inset-0 flex justify-between items-center px-2 text-sm font-medium text-white'>
