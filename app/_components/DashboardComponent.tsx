@@ -98,98 +98,61 @@ const DashboardComponent = () => {
     if (selectedFile) {
       const formData = new FormData();
       formData.append("file", selectedFile);
-
       setLoading(true);
       setIsModalOpen(false);
       setError(null);
 
       try {
-        // Length Request
-        const response = await fetch("https://wrd-len.onrender.com/wrd_len/", {
-          method: "POST",
-          body: formData,
-        });
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        setResponseData(data);
-
-        // Vader Request
-        const vaderResponse = await fetch(
-          "https://vader-edft.onrender.com/vader/",
-          {
+        const fetchData = async (url: string, body: FormData) => {
+          const response = await fetch(url, {
             method: "POST",
-            body: formData,
-          },
-        );
-        if (!vaderResponse.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const vaderData = await vaderResponse.json();
-        setResponseVader(vaderData);
+            body: body,
+          });
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        };
 
-        // Word Weightage Request
-        const wordWeightageResponse = await fetch(
-          "https://imp-words.onrender.com/imp_words/",
-          {
-            method: "POST",
-            body: formData,
-          },
-        );
-        if (!wordWeightageResponse.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const wordWeightageData = await wordWeightageResponse.json();
-        setWordWeightageResponse(wordWeightageData);
+        const featureCountUrl =
+          selectedOption === "random_forest"
+            ? "https://modelapi-dt3c.onrender.com/model/"
+            : "https://modelapi2.onrender.com/model2/";
 
-        // Feature Count
-        let featureCountResponse;
-        if (selectedOption === "random_forest") {
-          // Random Forest
-          featureCountResponse = await fetch(
-            "https://modelapi-dt3c.onrender.com/model/",
-            {
-              method: "POST",
-              body: formData,
-            },
-          );
-        } else {
-          // Other models {logistic or SVM}
+        if (selectedOption !== "random_forest") {
           formData.append(
             "model",
             selectedOption === "logistic_regression" ? "log" : "svm",
           );
-          featureCountResponse = await fetch(
-            "https://modelapi2.onrender.com/model2/",
-            {
-              method: "POST",
-              body: formData,
-            },
-          );
         }
 
-        if (!featureCountResponse.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const featureCountData = await featureCountResponse.json();
+        const [lengthData, vaderData, wordWeightageData, featureCountData] =
+          await Promise.all([
+            fetchData("https://wrd-len.onrender.com/wrd_len/", formData),
+            fetchData("https://vader-edft.onrender.com/vader/", formData),
+            fetchData("https://imp-words.onrender.com/imp_words/", formData),
+            fetchData(featureCountUrl, formData),
+          ]);
+
+        setResponseData(lengthData);
+        setResponseVader(vaderData);
+        setWordWeightageResponse(wordWeightageData);
         setFeatureCntResponse(featureCountData);
-
-        setLoading(false); // Turn off loader after all responses are received
       } catch (error) {
         console.error("There was a problem with the fetch operation:", error);
-        setError("Failed to fetch data. Please try again."); // Set error message
-        setLoading(false); // Turn off loader on error
+        setError("Failed to fetch data. Please try again.");
+      } finally {
+        setLoading(false);
       }
     }
   };
 
   return (
     <div className='flex flex-col'>
-      <header className='flex items-center h-16 px-4 border-b border-muted/20 shrink-0 md:px-6 bg-[#ddeffc]'>
+      <header className='flex items-center h-16 px-4 border-b border-muted/20 shrink-0 md:px-6 bg-gradient-to-b from-[#ddeffc] to-[#ebf5fc]'>
         <Link
           href='/'
-          className='flex items-center justify-center gap-2 text-lg font-semibold sm:text-base mr-4 bg-gradient-to-tl from-blue-100 to-blue-100/25  py-3 mt-2 px-8 rounded-xl '
+          className='flex items-center justify-center gap-2 text-lg font-semibold sm:text-base mr-4   py-3 mt-2 px-8 rounded-xl '
         >
           <HotelReviewIcon className='w-6 h-6' />
           <span className='text-xl bg-gradient-to-r from-blue-500 to-sky-500/45 bg-clip-text text-transparent'>
