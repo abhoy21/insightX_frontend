@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 
-interface ApiInfo {
+interface ApiInfo  {
   id: string
   name: string
   url: string
@@ -22,7 +22,7 @@ const apiList: ApiInfo[] = [
 ]
 
 export function useApiStatus(): ApiStatus[] {
-  const [apiStatuses, setApiStatuses] = useState<ApiStatus[]>([])
+  const [apiStatuses, setApiStatuses] = useState<ApiStatus[]>([]);
 
   useEffect(() => {
     const checkApiStatus = async (api: ApiInfo): Promise<ApiStatus> => {

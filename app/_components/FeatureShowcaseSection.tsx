@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function FeaturesSection(): JSX.Element {
   return (
-    <section className='w-full py-12 md:py-32 bg-[#ddeffc]'>
+    <section className='w-full py-12 md:py-32 bg-[#ebf5fc]'>
       <div className='ml-20 md:px-6'>
         <div className='flex flex-col items-center justify-center space-y-4 text-center'>
           <div className='space-y-2'>
@@ -10,11 +10,11 @@ export default function FeaturesSection(): JSX.Element {
               Product Capabilities
             </div>
             <h2 className='text-3xl font-bold tracking-tighter sm:text-5xl'>
-              Discover the Power of Our SaaS Platform
+              Discover the Power of InsightX
             </h2>
             <p className='max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed'>
-              Explore the key features and capabilities of our SaaS platform
-              that can help transform your business.
+              Explore the key features and capabilities of InsightX that can
+              help transform your business.
             </p>
           </div>
         </div>
@@ -22,7 +22,7 @@ export default function FeaturesSection(): JSX.Element {
           <Image
             src='/productFeature.png'
             alt='Product Capabilities'
-            className='mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full'
+            className='mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full custom-neumorphism'
             width={550}
             height={310}
           />

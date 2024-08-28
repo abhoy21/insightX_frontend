@@ -3,7 +3,7 @@ import { HotelReviewIcon } from "./Icons";
 
 export default function Header(): JSX.Element {
   return (
-    <header className='px-4 lg:px-6 h-14 flex items-center pb-4 pt-6 bg-[#ddeffc]'>
+    <header className='px-4 lg:px-6 h-14 flex items-center pb-4 pt-6 bg-gradient-to-b from-[#ddeffc] to-[#ebf5fc] border-b border-gray-200'>
       <Link href='/' className='flex items-center justify-center'>
         <HotelReviewIcon className='w-6 h-6' />
         <span className='text-3xl bg-gradient-to-r from-blue-500 to-sky-500/45 bg-clip-text text-transparent'>

@@ -368,7 +368,7 @@ const DashboardComponent = () => {
           <div className='text-red-500'>{error}</div>
         ) : (
           // Render content when not loading and no error
-          <div className=''>
+          <div>
             <div className='grid grid-cols-3 gap-4'>
               <div className='col-span-2'>
                 <ReviewSentimentCard

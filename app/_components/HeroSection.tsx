@@ -5,7 +5,7 @@ import { SparklesIcon } from "./Icons";
 
 export default function HeroSection(): JSX.Element {
   return (
-    <section className='w-full py-12 sm:py-16 md:py-36 bg-[#ebf5fc]'>
+    <section className='w-full py-12 sm:py-16 md:py-36  bg-[#ddeffc]'>
       <div className='md:px-6'>
         <div className='grid gap-4 lg:grid-cols-2 lg:gap-12'>
           <div className='flex flex-col justify-center space-y-4 ml-20'>
