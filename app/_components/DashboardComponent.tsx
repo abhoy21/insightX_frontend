@@ -115,14 +115,14 @@ const DashboardComponent = () => {
         };
 
         const featureCountUrl =
-          selectedOption === "random_forest"
+          selectedOption === "Random Forest Classifier"
             ? "https://modelapi-dt3c.onrender.com/model/"
             : "https://modelapi2.onrender.com/model2/";
 
-        if (selectedOption !== "random_forest") {
+        if (selectedOption !== "Random Forest Classifier") {
           formData.append(
             "model",
-            selectedOption === "logistic_regression" ? "log" : "svm",
+            selectedOption === "Logistic Regression" ? "log" : "svm",
           );
         }
 
@@ -239,13 +239,15 @@ const DashboardComponent = () => {
                   <option value='' disabled>
                     Select a model
                   </option>
-                  <option value='logistic_regression'>
+                  <option value='Logistic Regression'>
                     Logistic Regression
                   </option>
-                  <option value='random_forest'>
+                  <option value='Random Forest Classifier'>
                     Random Forest Classifier
                   </option>
-                  <option value='svm'>Support Vector Machine</option>
+                  <option value='Support Vector Machine(svm)'>
+                    Support Vector Machine
+                  </option>
                 </select>
                 <div className='pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700'>
                   <svg
@@ -361,7 +363,7 @@ const DashboardComponent = () => {
       </>
       <main className='flex flex-1 flex-col justify-center items-center gap-4 p-4 md:gap-8 md:p-6'>
         {loading ? ( // Show loader if loading
-          <Loader />
+          <Loader propsModelName={selectedOption} />
         ) : error ? ( // Show error message if there's an error
           <div className='text-red-500'>{error}</div>
         ) : (

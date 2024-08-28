@@ -26,7 +26,7 @@ export default function Header(): JSX.Element {
           Documentation
         </Link>
         <Link
-          href='#'
+          href='status'
           className='text-sm font-medium hover:underline underline-offset-4 text-gray-500'
           prefetch={false}
         >

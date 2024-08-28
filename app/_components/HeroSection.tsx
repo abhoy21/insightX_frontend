@@ -1,16 +1,17 @@
 import Lottie from "lottie-react";
 import Link from "next/link";
 import animationData from "../../public/Animation - 1724528100201.json";
+import { SparklesIcon } from "./Icons";
 
 export default function HeroSection(): JSX.Element {
   return (
     <section className='w-full py-12 sm:py-16 md:py-36 bg-[#ebf5fc]'>
-      <div className='ml-20 md:px-6'>
-        <div className='grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_550px]'>
-          <div className='flex flex-col justify-center space-y-4'>
-            <div className='space-y-2'>
-              <h1 className='text-3xl bg-gradient-to-r from-sky-600 to-sky-500/45 bg-clip-text text-transparent font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl'>
-                Streamline Your Business with Our SaaS Platform
+      <div className='md:px-6'>
+        <div className='grid gap-4 lg:grid-cols-2 lg:gap-12'>
+          <div className='flex flex-col justify-center space-y-4 ml-20'>
+            <div className='space-y-2 space-x-2'>
+              <h1 className='text-3xl bg-gradient-to-r from-sky-600 to-sky-500/45 bg-clip-text text-transparent font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-7xl py-2'>
+                Streamline Your Business with InsightX
               </h1>
               <p className='max-w-[600px] text-muted-foreground md:text-xl text-justify font-medium py-4'>
                 Our solution utilizes machine learning algorithms for sentiment
@@ -26,6 +27,7 @@ export default function HeroSection(): JSX.Element {
                 className='inline-flex h-10 items-center justify-center rounded-md bg-gradient-to-tl from-sky-500 to-sky-500/25 px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-sky-600 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50'
                 prefetch={false}
               >
+                <SparklesIcon className='h-6 w-6 inline align-text-top mr-2' />
                 Get Started
               </Link>
               <Link
@@ -37,10 +39,14 @@ export default function HeroSection(): JSX.Element {
               </Link>
             </div>
           </div>
-          <Lottie
-            animationData={animationData}
-            className='mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last lg:aspect-square lottie-larger'
-          />
+          <div className='flex justify-center items-center'>
+            <div className='w-full h-auto lg:max-w-[600px]'>
+              <Lottie
+                animationData={animationData}
+                className='aspect-square rounded-xl object-cover'
+              />
+            </div>
+          </div>
         </div>
       </div>
     </section>

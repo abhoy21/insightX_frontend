@@ -55,12 +55,6 @@
   display: none; /* For Chrome, Safari, and Opera */
 }
 
-.lottie-larger {
-  width: 80vw; /* 80% of viewport width */
-  height: 60vh; /* 80% of viewport height */
-  max-width: 800px; /* Maximum width */
-  max-height: 800px; /* Maximum height */
-}
 
 .loader {
   @apply relative flex items-center justify-center rounded-full;
