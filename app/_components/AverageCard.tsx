@@ -25,7 +25,7 @@ const AverageCard: React.FC<AverageCardProps> = ({ average }) => {
             cy={radius}
           />
           <circle
-            className='text-blue-700'
+            className='text-blue-500'
             strokeWidth='10'
             strokeDasharray={circumference}
             strokeDashoffset={strokeDashoffset}

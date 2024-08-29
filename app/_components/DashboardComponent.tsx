@@ -8,7 +8,7 @@ import {
   ReviewSentimentCard,
 } from "./AverageReviewLengthComponent";
 import FeatureCountCard from "./FeatureCountComponent";
-import { BulbIcon, HotelReviewIcon, TextIcon, UploadIcon } from "./Icons";
+import { HotelReviewIcon, TextIcon, UploadIcon } from "./Icons";
 import Loader from "./Loader"; // Assuming you have the Loader component from the previous code
 import VaderValuesCard from "./VaderComponet";
 import WordsWeightageChartComponent from "./WordsWeightChartComponent";
@@ -244,11 +244,17 @@ const DashboardComponent = () => {
               <UploadIcon className='w-5 h-5 text-sky-400 mr-4' />
             </Button>
           </div>
-          <div className='relative flex-1 rounded-full border border-gray-200 hover:border-sky-500 bg-gradient-to-tl from-blue-100 to-blue-100/25 p-2'>
-            <Link href='status'>
-              <BulbIcon className='w-5 h-5 text-sky-400' />
-            </Link>
-          </div>
+          <Link href='status'>
+            <div className='flex items-center gap-2 ml-8'>
+              <Button
+                size='icon'
+                variant='ghost'
+                className='flex justify-center rounded-xl w-[80px] border border-gray-200 hover:border-sky-500 bg-gradient-to-tl from-blue-100 to-blue-100/25'
+              >
+                <span className='text-sky-400 font-mono text-xl'>API</span>
+              </Button>
+            </div>
+          </Link>
         </div>
       </header>
       <>
@@ -416,9 +422,21 @@ const DashboardComponent = () => {
                     Submit
                   </button>
                 </div>
-                {/* Right Side: Results Display */}
-                <div className='bg-[#ebf5fc] text-sky-600 p-6 rounded-3xl border-l-4 border-gray-200 min-h-full'>
-                  <h2 className='text-3xl font-semibold mb-4'>Results</h2>
+
+                <div
+                  className={`p-6 rounded-3xl border-l-4 min-h-full my-2 mr-2 ${
+                    String(reviewText.result) === "0"
+                      ? "bg-gradient-to-tl from-green-200 to-green-200/25 text-green-600 border-green-200"
+                      : String(reviewText.result) === "1"
+                      ? "bg-gradient-to-tl from-red-200 to-red-200/25 text-red-600 border-red-200"
+                      : "bg-[#ebf5fc] text-sky-600 border-gray-200"
+                  }`}
+                >
+                  <h2 className='text-3xl font-semibold mb-1'>Results</h2>
+                  <p className='text-gray-500'>
+                    This functionality is only intended for testing purposes;
+                    uploading (.csv) files is advised for better insights.
+                  </p>
                   <div className='min-h-full flex items-center justify-center'>
                     {loadingText ? (
                       <div className='loaderText'></div>
@@ -427,25 +445,21 @@ const DashboardComponent = () => {
                     ) : (
                       <div className='flex flex-col items-center justify-center'>
                         {String(reviewText.result) === "0" && (
-                          <p className='text-green-500 text-xl font-semibold'>
-                            Positive response detected. We&apos;re glad you had
-                            a good experience!
-                            <br />
-                            Your feedback helps us continue providing excellent
-                            service. Thank you for sharing your positive
-                            thoughts!
-                          </p>
+                          <>
+                            <p className='text-green-500 text-3xl font-bold px-10 text-justify'>
+                              Positive response detected. We are pleased to see
+                              that the feedback indicates a favorable outcome.
+                            </p>
+                          </>
                         )}
                         {String(reviewText.result) === "1" && (
-                          <p className='text-red-500 text-xl font-semibold'>
-                            Your review indicates a negative experience.
-                            We&apos;re sorry to hear that.
-                            <br />
-                            We strive to improve, and your feedback is
-                            invaluable. Please consider providing more details
-                            so we can better understand and address your
-                            concerns.
-                          </p>
+                          <>
+                            <p className='text-red-500 text-3xl font-bold px-10 text-justify'>
+                              Negative feedback detected. We acknowledge the
+                              concern raised and are committed to addressing the
+                              issues reported.
+                            </p>
+                          </>
                         )}
                         {!["0", "1"].includes(String(reviewText.result)) && (
                           <p className='text-gray-500 text-xl font-semibold'>
