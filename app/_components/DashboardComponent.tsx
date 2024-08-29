@@ -8,7 +8,7 @@ import {
   ReviewSentimentCard,
 } from "./AverageReviewLengthComponent";
 import FeatureCountCard from "./FeatureCountComponent";
-import { HotelReviewIcon, TextIcon, UploadIcon } from "./Icons";
+import { BulbIcon, HotelReviewIcon, TextIcon, UploadIcon } from "./Icons";
 import Loader from "./Loader"; // Assuming you have the Loader component from the previous code
 import VaderValuesCard from "./VaderComponet";
 import WordsWeightageChartComponent from "./WordsWeightChartComponent";
@@ -17,7 +17,14 @@ const DashboardComponent = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpenText, setIsModalOpenText] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [description, setDescription] = useState<string>("");
+  const [reviewText, setReviewText] = useState<{ result: string }>({
+    result: "",
+  });
   const [selectedOption, setSelectedOption] = useState<string | "">("");
+  const [loading, setLoading] = useState(false);
+  const [loadingText, setLoadingText] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -35,6 +42,12 @@ const DashboardComponent = () => {
   ) => {
     const file = event.target.files?.[0] || null;
     setSelectedFile(file);
+  };
+
+  const handleDescriptionChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
+    setDescription(e.target.value);
   };
 
   const handleOptionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -77,9 +90,6 @@ const DashboardComponent = () => {
       }
     | {}
   >({});
-
-  const [loading, setLoading] = useState(false); // Loading state
-  const [error, setError] = useState<string | null>(null); // Error state
 
   const defaultReviewLengthData = {
     avg_len: 0,
@@ -147,6 +157,52 @@ const DashboardComponent = () => {
     }
   };
 
+  const handleSubmitText = async (
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    event.preventDefault();
+
+    if (description) {
+      const formData = new FormData();
+      formData.append("text", description);
+
+      setLoadingText(true);
+      setError(null);
+
+      try {
+        const fetchData = async (url: string, body: FormData) => {
+          const responseReviewText = await fetch(url, {
+            method: "POST",
+            body: body,
+          });
+          if (!responseReviewText)
+            throw new Error("Network response was not ok");
+
+          return responseReviewText.json();
+        };
+
+        if (selectedOption === "random_forest") {
+          formData.append("model", "r");
+        } else if (selectedOption === "logistic_regression") {
+          formData.append("model", "l");
+        } else {
+          formData.append("model", "s");
+        }
+
+        const responseTextAnswer = await fetchData(
+          "https://modeltext.onrender.com/get_text/",
+          formData,
+        );
+        setReviewText(responseTextAnswer);
+      } catch (error) {
+        console.error("There was a problem with the fetch operation:", error);
+        setError("Failed to fetch data. Please try again.");
+      } finally {
+        setLoadingText(false);
+      }
+    }
+  };
+
   return (
     <div className='flex flex-col'>
       <header className='flex items-center h-16 px-4 border-b border-muted/20 shrink-0 md:px-6 bg-gradient-to-b from-[#ddeffc] to-[#ebf5fc]'>
@@ -160,14 +216,15 @@ const DashboardComponent = () => {
           </span>
         </Link>
         <div className='flex items-center gap-4 ml-auto'>
-          <div className='relative flex-1 max-w-md'>
+          <div className='relative flex-1'>
             <Button
               size='icon'
               variant='ghost'
-              className='rounded-full border border-gray-200 hover:border-sky-500 bg-gradient-to-tl from-blue-100 to-blue-100/25'
+              className='flex justify-between rounded-xl w-[160px] border border-gray-200 hover:border-sky-500 bg-gradient-to-tl from-blue-100 to-blue-100/25'
               onClick={() => setIsModalOpenText(true)}
             >
-              <TextIcon className='w-5 h-5 text-sky-400' />
+              <span className='ml-4 text-gray-400'>Text Input</span>
+              <TextIcon className='w-5 h-5 text-sky-400 mr-4' />
             </Button>
           </div>
           <div className='flex items-center gap-2'>
@@ -180,11 +237,17 @@ const DashboardComponent = () => {
             <Button
               size='icon'
               variant='ghost'
-              className='rounded-full border border-gray-200 hover:border-sky-500 bg-gradient-to-tl from-blue-100 to-blue-100/25'
+              className='flex justify-between rounded-xl w-[160px] border border-gray-200 hover:border-sky-500 bg-gradient-to-tl from-blue-100 to-blue-100/25'
               onClick={() => setIsModalOpen(true)}
             >
-              <UploadIcon className='w-5 h-5 text-sky-400' />
+              <span className='ml-4 text-gray-400'>Uplaod File</span>
+              <UploadIcon className='w-5 h-5 text-sky-400 mr-4' />
             </Button>
+          </div>
+          <div className='relative flex-1 rounded-full border border-gray-200 hover:border-sky-500 bg-gradient-to-tl from-blue-100 to-blue-100/25 p-2'>
+            <Link href='status'>
+              <BulbIcon className='w-5 h-5 text-sky-400' />
+            </Link>
           </div>
         </div>
       </header>
@@ -270,11 +333,11 @@ const DashboardComponent = () => {
                   onClick={handleSubmit}
                   disabled={!selectedFile || !selectedOption}
                   className={`px-4 py-2 rounded-md text-white transition-colors duration-300 ease-in-out 
-    ${
-      !selectedFile || !selectedOption
-        ? "bg-sky-500/25 cursor-not-allowed shadow-none"
-        : "bg-gradient-to-tl from-sky-500 to-sky-500/35 hover:bg-sky-600 backdrop-blur-md backdrop-saturate-150 custom-neumorphism shadow-lg"
-    }`}
+                    ${
+                      !selectedFile || !selectedOption
+                        ? "bg-sky-500/25 cursor-not-allowed shadow-none"
+                        : "bg-gradient-to-tl from-sky-500 to-sky-500/35 hover:bg-sky-600 backdrop-blur-md backdrop-saturate-150 custom-neumorphism shadow-lg"
+                    }`}
                 >
                   Submit
                 </button>
@@ -309,7 +372,9 @@ const DashboardComponent = () => {
                   <textarea
                     className='w-full p-2 mt-14 border border-gray-300 bg-[#e0f2ff] rounded-lg'
                     rows={7}
+                    value={description}
                     placeholder='Type your description here...'
+                    onChange={handleDescriptionChange}
                   ></textarea>
                   <div className='relative mb-4'>
                     <select
@@ -338,22 +403,58 @@ const DashboardComponent = () => {
                       </svg>
                     </div>
                   </div>
-                  <Button
-                    variant='ghost'
-                    className='w-full mt-4 px-4 py-2 bg-gradient-to-tl from-sky-500 to-sky-500/35 hover:bg-sky-600  text-white rounded-md '
+                  <button
+                    onClick={handleSubmitText}
+                    disabled={!description || !selectedOption}
+                    className={`px-4 py-2 rounded-md text-white transition-colors duration-300 ease-in-out 
+                    ${
+                      !description || !selectedOption
+                        ? "bg-sky-500/25 cursor-not-allowed shadow-none"
+                        : "bg-gradient-to-tl from-sky-500 to-sky-500/35 hover:bg-sky-600 backdrop-blur-md backdrop-saturate-150 custom-neumorphism shadow-lg"
+                    }`}
                   >
                     Submit
-                  </Button>
+                  </button>
                 </div>
-
                 {/* Right Side: Results Display */}
                 <div className='bg-[#ebf5fc] text-sky-600 p-6 rounded-3xl border-l-4 border-gray-200 min-h-full'>
-                  <h2 className='text-xl font-semibold mb-4'>Results</h2>
+                  <h2 className='text-3xl font-semibold mb-4'>Results</h2>
                   <div className='min-h-full flex items-center justify-center'>
-                    {/* Placeholder for results */}
-                    <p className='text-gray-400'>
-                      Results will be displayed here...
-                    </p>
+                    {loadingText ? (
+                      <div className='loaderText'></div>
+                    ) : error ? (
+                      <div className='text-red-500'>{error}</div>
+                    ) : (
+                      <div className='flex flex-col items-center justify-center'>
+                        {String(reviewText.result) === "0" && (
+                          <p className='text-green-500 text-xl font-semibold'>
+                            Positive response detected. We&apos;re glad you had
+                            a good experience!
+                            <br />
+                            Your feedback helps us continue providing excellent
+                            service. Thank you for sharing your positive
+                            thoughts!
+                          </p>
+                        )}
+                        {String(reviewText.result) === "1" && (
+                          <p className='text-red-500 text-xl font-semibold'>
+                            Your review indicates a negative experience.
+                            We&apos;re sorry to hear that.
+                            <br />
+                            We strive to improve, and your feedback is
+                            invaluable. Please consider providing more details
+                            so we can better understand and address your
+                            concerns.
+                          </p>
+                        )}
+                        {!["0", "1"].includes(String(reviewText.result)) && (
+                          <p className='text-gray-500 text-xl font-semibold'>
+                            Write a review and select a model to get your
+                            results
+                          </p>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -362,12 +463,11 @@ const DashboardComponent = () => {
         )}
       </>
       <main className='flex flex-1 flex-col justify-center items-center gap-4 p-4 md:gap-8 md:p-6'>
-        {loading ? ( // Show loader if loading
+        {loading ? (
           <Loader propsModelName={selectedOption} />
-        ) : error ? ( // Show error message if there's an error
+        ) : error ? (
           <div className='text-red-500'>{error}</div>
         ) : (
-          // Render content when not loading and no error
           <div>
             <div className='grid grid-cols-3 gap-4'>
               <div className='col-span-2'>
