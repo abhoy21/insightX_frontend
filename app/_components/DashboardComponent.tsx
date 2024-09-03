@@ -126,7 +126,7 @@ const DashboardComponent = () => {
 
         const featureCountUrl =
           selectedOption === "Random Forest Classifier"
-            ? "https://modelapi-dt3c.onrender.com/model/"
+            ? "http://13.71.16.75/model/"
             : "https://modelapi2.onrender.com/model2/";
 
         if (selectedOption !== "Random Forest Classifier") {
