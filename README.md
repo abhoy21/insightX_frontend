@@ -14,15 +14,9 @@ InsightX is a cutting-edge web application that provides businesses with actiona
 ## Technology Stack
 
 - **Frontend Framework**: Next.js
-- **Styling**: Tailwind CSS
-- **Charts**: Chart.js
+- **Styling**: Tailwind CSS, Shadcn UI
 
 ## Getting Started
-
-### Prerequisites
-
-- Node.js (v14 or later)
-- npm (v6 or later)
 
 
 ### Installation
@@ -131,8 +125,8 @@ client/
 
 For more detailed information about our APIs and their usage, please refer to the API repositories:
 
-- [Model API 2 (Logistic Regression & Support Vector Machine(SVM))](https://github.com/UD11/model_api2.git)
 - [Model API 1 (Random Forest Classifier)](https://github.com/UD11/cogni_model_api.git)
+- [Model API 2 (Logistic Regression & Support Vector Machine(SVM))](https://github.com/UD11/model_api2.git)
 - [Important Words](https://github.com/UD11/imp_words.git)
 - [VADER Values](https://github.com/UD11/vader.git)
 - [Word Lengths](https://github.com/UD11/wrd_len.git)
@@ -140,35 +134,27 @@ For more detailed information about our APIs and their usage, please refer to th
 
 
 
-# File Upload and API Integration Example
+# File Upload and API Integration
 
 This project demonstrates how to handle file uploads in a React application and integrate with multiple APIs to process the uploaded file. The code snippet provided is part of an event handler function that handles the submission of a file, sends it to different APIs for processing, and manages the response data.
 
-## Table of Contents
-
-- [Overview](#overview)
-- [Usage](#usage)
-- [API Information](#api-information)
-- [Code Explanation](#code-explanation)
-- [Error Handling](#error-handling)
-- [Example](#example)
-- [License](#license)
 
 ## Overview
 
-The `handleSubmit` function is an asynchronous function that is triggered when a user submits a file through a button click. It uploads the selected file to multiple APIs, retrieves the results, and updates the application state with the responses. This approach is useful in scenarios where you need to process a file using different models or services, such as text analysis, machine learning predictions, or data extraction.
+The `handleSubmit` function is an asynchronous function that is triggered when a user submits a file through a button click. It uploads the selected file to multiple APIs, retrieves the results, and updates the application state with the responses. This approach is useful in scenarios where there is a need to process a file using different models or services, such as text analysis, machine learning predictions, or data extraction.
 
 ## Usage
 
 This function is designed to be used in a React component where users can upload a file and select a model option for processing. The function handles the following:
 
 - Uploads the selected file to multiple APIs.
-- Processes the file using different machine learning models depending on the user's selection.
+- Processes the file using different machine learning models depending on the user's selection along with other .
 - Updates the component's state with the results from the APIs.
 
-To integrate this function into your project:
+To integrate this function into a Nextjs project:
 
-1. Ensure you have React set up in your project.
+1. Initialize variables for storing responses and managing the state in your React component.
+
 2. Use this function within a component that manages file uploads and model selections.
 
 ## API Information
@@ -177,7 +163,7 @@ The function sends the uploaded file to the following APIs:
 
 - **Word Length API**: Processes the file to determine word lengths.
   - URL: `https://wrd-len.onrender.com/wrd_len/`
-- **VADER API**: Analyzes the sentiment of the text.
+- **VADER API**: Analyzes the sentiment of the text (provides positive,negative, neutral and compound scores).
   - URL: `https://vader-edft.onrender.com/vader/`
 - **Important Words API**: Identifies important words in the text.
   - URL: `https://imp-words.onrender.com/imp_words/`
@@ -204,11 +190,11 @@ The function sends the uploaded file to the following APIs:
 
 ### Function Flow
 
-1. **Prevent Default Behavior**: Prevents the default form submission behavior.
-2. **Loading and Modal State Management**: Sets loading state and closes any open modal before initiating the API requests.
-3. **API Requests**: Based on the selected model, the function dynamically chooses the appropriate API and sends the file data.
-4. **Response Handling**: Once all requests are completed, the function updates the state with the received data or handles any errors.
-5. **Finalizing**: Resets the loading state once all operations are complete.
+
+1. **Loading and Modal State Management**: Sets loading state and closes any open modal before initiating the API requests.
+2. **API Requests**: Based on the selected model, the function dynamically chooses the appropriate API and sends the file data.
+3. **Response Handling**: Once all requests are completed, the function updates the state with the received data or handles any errors.
+4. **Finalizing**: Resets the loading state once all operations are complete.
 
 ## Error Handling
 
@@ -239,7 +225,7 @@ const MyComponent = () => {
     setSelectedOption(event.target.value);
   };
 
-  // Use handleSubmit function here (as defined above)
+  // Use handleSubmit function here (code snippet is provided below)
 
   return (
     <div>
@@ -258,6 +244,62 @@ const MyComponent = () => {
 };
 
 export default MyComponent;
+```
+
+```tsx
+ const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    if (selectedFile) {
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+      setLoading(true);
+      setIsModalOpen(false);
+      setError(null);
+
+      try {
+        const fetchData = async (url: string, body: FormData) => {
+          const response = await fetch(url, {
+            method: "POST",
+            body: body,
+          });
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        };
+
+        const featureCountUrl =
+          selectedOption === "Random Forest Classifier"
+            ? "https://modelapi-dt3c.onrender.com/model/"
+            : "https://modelapi2.onrender.com/model2/";
+
+        if (selectedOption !== "Random Forest Classifier") {
+          formData.append(
+            "model",
+            selectedOption === "Logistic Regression" ? "log" : "svm",
+          );
+        }
+
+        const [lengthData, vaderData, wordWeightageData, featureCountData] =
+          await Promise.all([
+            fetchData("https://wrd-len.onrender.com/wrd_len/", formData),
+            fetchData("https://vader-edft.onrender.com/vader/", formData),
+            fetchData("https://imp-words.onrender.com/imp_words/", formData),
+            fetchData(featureCountUrl, formData),
+          ]);
+
+        setResponseData(lengthData);
+        setResponseVader(vaderData);
+        setWordWeightageResponse(wordWeightageData);
+        setFeatureCntResponse(featureCountData);
+      } catch (error) {
+        console.error("There was a problem with the fetch operation:", error);
+        setError("Failed to fetch data. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
 ```
 
 # API Status Checker Hook
