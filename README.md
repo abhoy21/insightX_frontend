@@ -16,6 +16,18 @@ InsightX is a cutting-edge web application that provides businesses with actiona
 - **Frontend Framework**: Next.js
 - **Styling**: Tailwind CSS, Shadcn UI
 
+
+## Machine Learning Models Used
+
+In the sentiment analysis project, we have implemented the following machine learning models:
+
+- **Logistic Regression**: A statistical model that uses a logistic function to model binary dependent variables. It's often used for binary classification tasks and provides a good baseline model.
+
+- **Random Forest Classifier**: An ensemble learning method that operates by constructing a multitude of decision trees during training and outputting the class that is the mode of the classes (classification) of the individual trees.
+
+- **Support Vector Machine (SVM)**: A powerful classification technique that finds the hyperplane that best divides a dataset into classes. SVM is particularly effective in high-dimensional spaces and is used for both classification and regression challenges.
+
+
 ## Getting Started
 
 
