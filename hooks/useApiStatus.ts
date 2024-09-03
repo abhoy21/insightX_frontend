@@ -17,7 +17,7 @@ const apiList: ApiInfo[] = [
   { id: "1", name: "Word Length API", url: "https://wrd-len.onrender.com/status" },
   { id: "2", name: "VADER API", url: "https://vader-edft.onrender.com/status" },
   { id: "3", name: "Important Words API", url: "https://imp-words.onrender.com/status" },
-  { id: "4", name: "Model API", url: "https://modelapi-dt3c.onrender.com/status" },
+  { id: "4", name: "Model API 1", url: "https://modelapi-dt3c.onrender.com/status" },
   { id: "5", name: "Model API 2", url: "https://modelapi2.onrender.com/status" },
   { id: "6", name: "Model Api For Text", url: "https://modeltext.onrender.com/status"},
 ]

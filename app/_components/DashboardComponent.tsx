@@ -306,7 +306,7 @@ const DashboardComponent = () => {
                   className='w-full p-3  rounded-xl bg-gradient-to-tl from-sky-200 to-sky-200/25 text-gray-700 appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500'
                 >
                   <option value='' disabled>
-                    Select a model
+                    Select a ML Model
                   </option>
                   <option value='Logistic Regression'>
                     Logistic Regression
